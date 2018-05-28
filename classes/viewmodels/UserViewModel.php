@@ -6,15 +6,15 @@ use lemony\ViewModel;
 /**
  * @author Nikolaj Keist (lemony.io)
  */
-class NotFoundViewModel extends ViewModel
+class UserViewModel extends ViewModel
 {
 	
 	private $model = [];
 
 	function __construct()
 	{
-		parent::__construct('not-found');
-		$this->model['title'] = "Oh oh :/";
+		parent::__construct('user');
+		$this->model['title'] = "Benutzer!";
 	}
 
 	public function getModel() {
@@ -22,7 +22,7 @@ class NotFoundViewModel extends ViewModel
 	}
 
 	public function run($params) {
-		
+		$model['userId'] = $params['userId'];
 	}
 }
 ?>

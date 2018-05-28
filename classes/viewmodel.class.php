@@ -19,5 +19,7 @@ abstract class ViewModel
 	}
 
 	abstract function getModel();
+
+	abstract function run($params);
 }
 ?>

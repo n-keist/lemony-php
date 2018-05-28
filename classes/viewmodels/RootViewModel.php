@@ -20,5 +20,9 @@ class RootViewModel extends ViewModel
 	public function getModel() {
 		return $this->model;
 	}
+
+	public function run($params) {
+		
+	}
 }
 ?>
