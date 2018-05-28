@@ -1,0 +1,22 @@
+{
+    "name": "lemony/intro",
+    "description": "an introduction to the new stuff",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Nikolaj Keist",
+            "email": "keistnikolaj@gmail.com",
+            "homepage": "https://lemony.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "mustache/mustache": "~2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "lemony\\": "classes/",
+            "lemony\\viewmodel\\": "classes/viewmodels/"
+        }
+    }
+}
