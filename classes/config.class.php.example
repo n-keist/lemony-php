@@ -1,0 +1,51 @@
+<?php 
+/**
+ * @author Nikolaj Keist (lemony.io)
+ */
+class Config
+{
+
+	/*
+	 * things you are allowed to edit
+	 */
+
+	public function getSQLHost()
+	{
+		return "sql-hostname:port";
+	}
+
+	public function getSQLUsername()
+	{
+		return "sql-username";
+	}
+
+	public function getSQLPassword()
+	{
+		return "sql-password-that-better-is-safe";
+	}
+
+	public function getSQLDatabase()
+	{
+		return "sql-database";
+	}
+
+	/*
+	 * NEVER EVER CHANGE SOMETHING DOWN THERE. thank you.
+	 */
+
+	protected static $_instance = null;
+	
+	public static function getInstance()
+	{
+		if (null === self::$_instance)
+		{
+			self::$_instance = new self;
+		}
+		return self::$_instance;
+	}
+	 	   
+	protected function __clone() {}
+   
+   	protected function __construct() {}
+}
+?>
