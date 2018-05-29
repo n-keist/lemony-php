@@ -2,6 +2,7 @@
 namespace lemony\viewmodel;
 
 use lemony\ViewModel;
+use lemony\db;
 
 /**
  * @author Nikolaj Keist (lemony.io)
@@ -14,7 +15,7 @@ class RootViewModel extends ViewModel
 	function __construct()
 	{
 		parent::__construct('main');
-		$this->model['title'] = "foo";
+		$this->model['title'] = "QUEREIIEIEIS";
 	}
 
 	public function getModel() {
@@ -22,7 +23,12 @@ class RootViewModel extends ViewModel
 	}
 
 	public function run($params) {
-		
+		$query = db::getInstance()
+					->table('test')
+					->delete()
+					->where(['id' => 1]);
+		$this->model['query'] = $query->getQuery();
+		$this->model['parameters'] = var_export($query->getParams(), true);
 	}
 }
 ?>
