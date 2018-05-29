@@ -4,8 +4,9 @@ require __DIR__ . '/vendor/autoload.php';
 $router = lemony\Router::getInstance();
 
 $router->add('/', new lemony\viewmodel\RootViewModel());
+
+# > DO NOT < remove this one. thank you.
 $router->add('/not-found', new lemony\viewmodel\NotFoundViewModel());
-$router->add('/user/{userId}/{userAction}', new lemony\viewmodel\UserViewModel());
 
 include 'app/controller.php';
 ?>
