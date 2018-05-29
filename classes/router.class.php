@@ -23,78 +23,81 @@ class Router
    
    	protected function __construct() {}
 
-   	public function add($route, ViewModel $viewmodel, $method = 'GET') {
-   		$baseRoute = preg_replace('/{(.*?)}/', '', $route);
-   		$this->routes[] = ['route' => $baseRoute, 'model' => $viewmodel, 'method' => $method];
+   	public function add($route, ViewModel $viewmodel, $method = 'GET') 
+   	{
+   		$this->routes[] = ['route' => $route, 'model' => $viewmodel, 'method' => $method];
    	}
 
-   	public function routeExists($route, $requestMethod) {
-   		$routeExists = false;
-   		$baseRoute = preg_replace('/{(.*?)}/', '', $route);
-   		$baseRoute = trim($baseRoute, '/');
+   	public function routeExists($route, $requestMethod) 
+   	{
+		$routeExists = false;
+   		$routeRequestArray = ($route == '/' ? ['/'] : explode('/', trim($route, '/')));
    		
-   		foreach($this->routes as $route_) {
-
+   		foreach ($this->routes as $route_) {
    			if($route_['method'] == $requestMethod) {
-
-   				$routeArray = explode('/', trim($route_['route'], '/'));
-   				$routeRequestArray = explode('/', $baseRoute);
-
+   				$routeArray = ($route_['route'] == '/' ? ['/'] : explode('/', trim($route_['route'], '/')));
+   				$routeItemsIgnored = [];
    				for($i = 0; $i < sizeof($routeArray); $i++) {
-   					if($routeArray[$i] == $routeRequestArray[$i] && !strpos($routeArray[$i], "{")) {
-   						$routeExists = true;
+   					if(self::startsWith($routeArray[$i], "{")) {
+   						$routeItemsIgnored[] = $i;
    					}
    				}
-
+   				for($i = 0; $i < sizeof($routeRequestArray); $i++) {
+   					if(!in_array($i, $routeItemsIgnored)) {
+   						$routeExists = ($routeArray[$i] == $routeRequestArray[$i]);
+   					}
+   				}
+   				if($routeExists)
+   					break;
    			}
    		}
-   		#var_dump($routeExists);
    		return $routeExists;
    	}
 
-   	public function getRoute($route, $requestMethod) {
+   	public function getRoute($route, $requestMethod) 
+   	{
    		$outputRoute = null;
-   		$baseRoute = preg_replace('/{(.*?)}/', '', $route);
-   		$baseRoute = trim($baseRoute, '/');
-   		
-   		foreach($this->routes as $route_) {
-
+   		$routeRequestArray = ($route == '/' ? ['/'] : explode('/', trim($route, '/')));
+   		$routeIndex = 0;
+   		foreach ($this->routes as $route_) {
    			if($route_['method'] == $requestMethod) {
-
-   				$routeArray = explode('/', trim($route_['route'], '/'));
-   				$routeRequestArray = explode('/', $baseRoute);
-
+   				$routeArray = ($route_['route'] == '/' ? ['/'] : explode('/', trim($route_['route'], '/')));
+   				$routeItemsIgnored = [];
    				for($i = 0; $i < sizeof($routeArray); $i++) {
-   					if($routeArray[$i] == $routeRequestArray[$i] && !strpos($routeArray[$i], "{")) {
-   						$outputRoute = $route_;
+   					if(self::startsWith($routeArray[$i], "{")) {
+   						$routeItemsIgnored[] = $i;
    					}
    				}
-
+   				for($i = 0; $i < sizeof($routeRequestArray); $i++) {
+   					if(!in_array($i, $routeItemsIgnored)) {
+   						if($routeArray[$i] == $routeRequestArray[$i]) {
+   							$outputRoute = $route_;
+   						}
+   					}
+   				}
+   				$this->routes[$routeIndex]['parameterIndexes'] = $routeItemsIgnored;
    			}
+   			$routeIndex++;
    		}
    		return $outputRoute;
    	}
 
-   	public function run($mustacheEngine, $route, $requestMethod) {
-		
-		$baseRoute = preg_replace('/{(.*?)}/', '', $route);
-
+   	public function run($mustacheEngine, $route, $requestMethod) 
+   	{
    		$routeData = self::getRoute($route, $requestMethod);
-
-		preg_match_all('/{(.*?)}/', $route, $matchesRequest);
-   		preg_match_all('/{(.*?)}/', $routeData['route'], $matches);
-   		
-   		var_dump($matches[1]);
+   		$routeArray = explode('/', trim($route, '/'));
+   		preg_match_all('/{(.*?)}/', $routeData['route'], $matchesRoute);
 
    		$requestParams = [];
 
 		for ($i = 0; $i < sizeof($matchesRoute[1]); $i++) {
-   			$requestParams[$matchesRoute[1][$i]] = $matchesRequest[1][$i];
+   			$requestParams[$matchesRoute[1][$i]] = $routeArray[$i + 1];
    		}
-
+   		
    		$viewModel = $routeData['model'];
    		
    		$html = $viewModel->run($requestParams);
+
    		if($viewModel->getTemplate() == null) {
    			echo $html;
    		} else {

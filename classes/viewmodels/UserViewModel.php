@@ -14,7 +14,6 @@ class UserViewModel extends ViewModel
 	function __construct()
 	{
 		parent::__construct('user');
-		$this->model['title'] = "Benutzer!";
 	}
 
 	public function getModel() {
@@ -22,7 +21,10 @@ class UserViewModel extends ViewModel
 	}
 
 	public function run($params) {
-		$model['userId'] = $params['userId'];
+		$this->model['title'] = "Benutzer!";
+		$this->model['userId'] = $params['userId'];
+		$this->model['userAction'] = $params['userAction'];
+		$this->model['dumpStr'] = "userId={$params['userId']};userAction={$params['userAction']}";
 	}
 }
 ?>

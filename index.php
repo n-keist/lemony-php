@@ -5,7 +5,7 @@ $router = lemony\Router::getInstance();
 
 $router->add('/', new lemony\viewmodel\RootViewModel());
 $router->add('/not-found', new lemony\viewmodel\NotFoundViewModel());
-$router->add('/user/{userId}', new lemony\viewmodel\UserViewModel());
+$router->add('/user/{userId}/{userAction}', new lemony\viewmodel\UserViewModel());
 
 include 'app/controller.php';
 ?>
