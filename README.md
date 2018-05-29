@@ -1,8 +1,8 @@
 lemony-php
----
+===
 This is a (very) tiny PHP-Framework which was intended to be used in a personal project. 
 
-####Routing and Views
+###Routing and Views
 There is no .htaccess to modify, URLs are "beautified" tho, but in a more convenient way. A URL might look like this: 
 
 `http://localhost:8080/?/home`
@@ -55,7 +55,7 @@ All Templates are stored in `/app/views`
 
 **This "framework" is using the Mustache Templating Engine.**
 
-####Database
+###Database
 In `/classes` there is a file called `config.class.php.example`, if you are going to use this feature, rename this file to `config.class.php` and update your credentials.
 
 The database class contains a basic QueryBuilder.
@@ -122,7 +122,7 @@ This class also supports raw queries, if you don't want to rely on the query bui
 $result = db::getInstance()->raw(query, parameters)->execute();
 ```
 
-####Installation
+###Installation
 1. Clone the project
 2. run `composer install` in the command prompt
 3. update your mysql data
