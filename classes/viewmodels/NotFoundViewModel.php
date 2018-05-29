@@ -14,7 +14,7 @@ class NotFoundViewModel extends ViewModel
 	function __construct()
 	{
 		parent::__construct('not-found');
-		$this->model['title'] = "Oh oh :/";
+		$this->model['title'] = "Site Error :: 404 - We couldn't find what you were looking for";
 	}
 
 	public function getModel() {
@@ -22,7 +22,7 @@ class NotFoundViewModel extends ViewModel
 	}
 
 	public function run($params) {
-		
+		http_response_code(404);
 	}
 }
 ?>
