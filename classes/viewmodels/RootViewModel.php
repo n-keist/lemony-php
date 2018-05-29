@@ -23,10 +23,11 @@ class RootViewModel extends ViewModel
 	}
 
 	public function run($params) {
-		$query = db::getInstance()
-					->table('test')
-					->delete()
-					->where(['id' => 1]);
+$query = db::getInstance()
+			->table('test')
+			->update(['job' => "Software Developer")
+			->where(['username' => "n-keist"])
+			->getQuery();
 		$this->model['query'] = $query->getQuery();
 		$this->model['parameters'] = var_export($query->getParams(), true);
 	}
