@@ -1,4 +1,5 @@
 <?php 
+namespace lemony;
 /**
  * @author Nikolaj Keist (lemony.io)
  */

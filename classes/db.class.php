@@ -1,7 +1,12 @@
 <?php
 namespace lemony;
 
+use lemony\Config;
+use \PDO;
+
 /**
+ * Basic QueryBuilder with support for raw queries
+ * and includes a database connection
  * @author Nikolaj Keist (lemony.io)
  */
 class db
@@ -53,7 +58,7 @@ class db
 	      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	      $this->connection = $pdo;
 	    } catch (PDOException $e) {
-	      throw new Exception("Incorrect SQL Configuration", 1);
+	      echo "PDO Unable to connect. (" . $e->getMessage() . ")";
 	    }
    	}
 
