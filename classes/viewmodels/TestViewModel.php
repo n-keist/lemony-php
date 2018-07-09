@@ -6,14 +6,14 @@ use lemony\ViewModel;
 /**
  * @author Nikolaj Keist (lemony.io)
  */
-class RootViewModel extends ViewModel
+class TestViewModel extends ViewModel
 {
 	
 	private $model = [];
 
 	function __construct()
 	{
-		parent::__construct('main');
+		parent::__construct('test');
 	}
 
 	public function getModel() 
@@ -23,7 +23,9 @@ class RootViewModel extends ViewModel
 
 	public function run($params) 
 	{
-		$this->model['title'] = "lemony-php :: simple microframework ⚗️";
+		$this->model['title'] = "somewhat a laboritory ⚗️";
+		$this->model['userId'] = $params['userId'];
+		$this->model['pre'] = var_export($params, true);
 	}
 }
 ?>

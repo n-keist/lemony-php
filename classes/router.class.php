@@ -69,6 +69,17 @@ class Router
 				for($i = 0; $i < sizeof($routeArray); $i++) {
 					if(self::startsWith($routeArray[$i], "{")) {
 						$routeItemsIgnored[] = $i;
+
+                  $routeParameter = $routeArray[$i];
+                  if(strpos($routeParameter, '@')) {
+                     $parameterName = explode('@', $routeParameter)[0];
+                     $regex = explode('}', explode('@', $routeParameter)[1])[0];
+                     if(!preg_match($regex, $routeRequestArray[$i])) {
+                        $routeExists = false;
+                        break;
+                     }
+                  }
+
 					}
 				}
 				for($i = 0; $i < sizeof($routeRequestArray); $i++) {
@@ -95,6 +106,7 @@ class Router
 				for($i = 0; $i < sizeof($routeArray); $i++) {
 					if(self::startsWith($routeArray[$i], "{")) {
 						$routeItemsIgnored[] = $i;
+
 					}
 				}
 				for($i = 0; $i < sizeof($routeRequestArray); $i++) {
@@ -120,7 +132,8 @@ class Router
 		$requestParams = [];
 
 	   for ($i = 0; $i < sizeof($matchesRoute[1]); $i++) {
-			$requestParams[$matchesRoute[1][$i]] = $routeArray[$i + 1];
+         $parameterArrayIndex = explode('@', $matchesRoute[1][$i])[0];
+			$requestParams[$parameterArrayIndex] = $routeArray[$i + 1];
 		}
 		
 		$viewModel = $routeData['model'];
