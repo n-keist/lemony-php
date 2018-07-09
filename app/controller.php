@@ -10,9 +10,19 @@ $mustacheEngine = new Mustache_Engine([
     ]);
 
 $requestUri = $_SERVER['REQUEST_URI'];
-if($router->startsWith($requestUri, "/?")) {
-  $requestUri = substr($requestUri, 2);
+$hasBasepath = $router->hasBasepath();
+
+$substrAmount = 2;
+
+if($hasBasepath) {
+	$substrAmount += strlen($router->getBasepath());
 }
+
+if($router->startsWith($requestUri, "/?" . $router->getBasepath())) {
+  $requestUri = substr($requestUri, $substrAmount);
+}
+
+#var_dump([$substrAmount, $requestUri]);
 
 if($router->routeExists($requestUri, $_SERVER['REQUEST_METHOD'])) {
   $router->run($mustacheEngine, $requestUri, $_SERVER['REQUEST_METHOD']);

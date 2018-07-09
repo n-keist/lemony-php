@@ -2,7 +2,6 @@
 namespace lemony\viewmodel;
 
 use lemony\ViewModel;
-use lemony\db;
 
 /**
  * @author Nikolaj Keist (lemony.io)
@@ -17,12 +16,14 @@ class RootViewModel extends ViewModel
 		parent::__construct('main');
 	}
 
-	public function getModel() {
+	public function getModel() 
+	{
 		return $this->model;
 	}
 
-	public function run($params) {
-		$this->model['title'] = "lemony-php";
+	public function run($params) 
+	{
+		$this->model['title'] = "lemony-php :: simple microframework";
 	}
 }
 ?>

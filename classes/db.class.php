@@ -63,7 +63,7 @@ class db
    	}
 
    	/**
-	 * @return PDO the created SQL Connection
+	    * @return PDO the created SQL Connection
    	 */
    	public function getConnection() :PDO
    	{

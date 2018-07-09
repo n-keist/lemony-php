@@ -17,11 +17,13 @@ class NotFoundViewModel extends ViewModel
 		$this->model['title'] = "Site Error :: 404 - We couldn't find what you were looking for";
 	}
 
-	public function getModel() {
+	public function getModel() 
+	{
 		return $this->model;
 	}
 
-	public function run($params) {
+	public function run($params) 
+	{
 		http_response_code(404);
 	}
 }

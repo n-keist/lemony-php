@@ -3,10 +3,13 @@ require __DIR__ . '/vendor/autoload.php';
 
 $router = lemony\Router::getInstance();
 
-$router->add('/', new lemony\viewmodel\RootViewModel());
+$router->basepath('/app');
+
+$router->route('/', new lemony\viewmodel\RootViewModel());
+#$router->route('/user/{userId![0-9]}/create', new ...);
 
 # > DO NOT < remove this one. thank you.
-$router->add('/not-found', new lemony\viewmodel\NotFoundViewModel());
+$router->route('/not-found', new lemony\viewmodel\NotFoundViewModel());
 
 include 'app/controller.php';
 ?>
